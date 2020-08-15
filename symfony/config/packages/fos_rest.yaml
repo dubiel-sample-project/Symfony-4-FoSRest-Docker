@@ -1,0 +1,17 @@
+# Read the documentation: https://symfony.com/doc/master/bundles/FOSRestBundle/index.html
+fos_rest:
+#    param_fetcher_listener:  true
+#    allowed_methods_listener:  true
+#    routing_loader: true
+    view:
+        view_response_listener:  true
+    exception:
+        codes:
+            App\Exception\LimitOutOfBoundsException: 400
+            App\Exception\NotFoundException: 404
+        messages:
+            App\Exception\LimitOutOfBoundsException: true
+            App\Exception\NotFoundException: true
+    format_listener:
+        rules:
+            - { path: ^/shout, prefer_extension: true, fallback_format: json, priorities: [ json ] }
