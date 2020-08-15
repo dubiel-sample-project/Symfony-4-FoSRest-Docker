@@ -1,0 +1,35 @@
+version: '3'
+
+services:
+    php:
+        build:
+            context: .
+            dockerfile: docker/php/Dockerfile
+            args:
+                TIMEZONE: ${TIMEZONE}
+        volumes:
+            - ./symfony/:/var/www/symfony/
+        networks:
+            - api
+    nginx:
+        build:
+            context: .
+            dockerfile: docker/nginx/Dockerfile
+        volumes:
+            - ./symfony/:/var/www/symfony/
+        ports:
+            - 8001:80
+        networks:
+            - api
+    redis:
+        image: redis:latest
+        ports:
+            - 6379:6379
+        volumes:
+            - ./docker/redis/redis.conf:/redis.conf
+        command: [ "redis-server", "/redis.conf" ]
+        networks:
+            - api
+
+networks:
+    api:
