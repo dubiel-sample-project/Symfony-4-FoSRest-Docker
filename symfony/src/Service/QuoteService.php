@@ -7,7 +7,7 @@ use Symfony\Component\Cache\Adapter\AdapterInterface;
 use App\Exception as AppException;
 use DateInterval;
 
-class QuoteService
+final class QuoteService
 {
 	const CACHE_PERIOD = 'PT300S';
 	
@@ -44,18 +44,18 @@ class QuoteService
 		return array_slice($item->get(), 0, $limit);
 	}
 	
-	private function transformQuote(string $quote) : string
+	public function transformQuote(string $quote) : string
 	{
 		return strtoupper($quote).'!';
 	}
 	
-	private function normalizeAuthor(string $author) : string
+	public function normalizeAuthor(string $author) : string
 	{
 		$author = preg_replace('/[^\w\s]+/', '', $author);
 		return strtolower(str_replace(' ', '-', $author));
 	}
 	
-	private function normalizeQuote(string $quote) : string
+	public function normalizeQuote(string $quote) : string
 	{
 		return preg_replace(['/\s{2}/', '/.$/'], [' ', ''], $quote);
 	}
