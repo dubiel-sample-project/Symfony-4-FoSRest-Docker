@@ -23,7 +23,8 @@ class QuoteService
 		$quotes = json_decode(file_get_contents($this->projectDir.'/resources/quotes.json'), true);
 		foreach($quotes['quotes'] as $quote) 
 		{
-			$this->quotes[$this->normalizeAuthor($quote['author'])][] = $quote['quote'];
+			$this->quotes[$this->normalizeAuthor($quote['author'])][] = 
+				$this->transformQuote($this->normalizeQuote($quote['quote']));
 		}
 	}
 	
@@ -43,10 +44,20 @@ class QuoteService
 		return array_slice($item->get(), 0, $limit);
 	}
 	
+	private function transformQuote(string $quote) : string
+	{
+		return strtoupper($quote).'!';
+	}
+	
 	private function normalizeAuthor(string $author) : string
 	{
 		$author = preg_replace('/[^\w\s]+/', '', $author);
 		return strtolower(str_replace(' ', '-', $author));
+	}
+	
+	private function normalizeQuote(string $quote) : string
+	{
+		return preg_replace(['/\s{2}/', '/.$/'], [' ', ''], $quote);
 	}
 	
 	private function validateLimit($limit) : void
