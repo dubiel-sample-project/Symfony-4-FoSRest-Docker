@@ -8,10 +8,10 @@ fos_rest:
     exception:
         codes:
             App\Exception\LimitOutOfBoundsException: 400
-            App\Exception\NotFoundException: 404
+            App\Exception\AuthorNotFoundException: 404
         messages:
             App\Exception\LimitOutOfBoundsException: true
-            App\Exception\NotFoundException: true
+            App\Exception\AuthorNotFoundException: true
     format_listener:
         rules:
             - { path: ^/shout, prefer_extension: true, fallback_format: json, priorities: [ json ] }
