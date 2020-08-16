@@ -12,10 +12,15 @@ class QuoteServiceTest extends KernelTestCase
 	public function setUp()
 	{
 		self::bootKernel();
+		//var_dump(self::$kernel->getProjectdir());
 		$this->quoteService = self::$container->get('App\Service\QuoteService');
+		//$this->quoteService = new QuoteService(self::$kernel->getProjectdir(), );
 	}
 	
-    public function testNormalizeQuoteWithTrailingPeriod()
+	/**
+	 * @test
+	 */
+    public function normalizeQuoteWithTrailingPeriod()
     {
 		$quote = 'If you do what you’ve always done, you’ll get what you’ve always gotten.';
 		$expected = 'If you do what you’ve always done, you’ll get what you’ve always gotten';
@@ -25,7 +30,10 @@ class QuoteServiceTest extends KernelTestCase
         $this->assertSame($expected, $actual);
 	}
 	
-	public function testNormalizeQuoteWithoutTrailingPeriod()
+	/**
+	 * @test
+	 */
+	public function normalizeQuoteWithoutTrailingPeriod()
     {
 		$quote = 'Nothing is impossible, the word itself says, “I’m possible!”';
 		$expected = 'Nothing is impossible, the word itself says, “I’m possible!”';
@@ -35,7 +43,10 @@ class QuoteServiceTest extends KernelTestCase
         $this->assertSame($expected, $actual);
 	}
 	
-	public function testTransformQuote()
+	/**
+	 * @test
+	 */
+	public function transformQuote()
     {
 		$quote = 'You can’t use up creativity.  The more you use, the more you have.';
 		$expected = 'YOU CAN’T USE UP CREATIVITY.  THE MORE YOU USE, THE MORE YOU HAVE.!';
@@ -45,7 +56,10 @@ class QuoteServiceTest extends KernelTestCase
         $this->assertSame($expected, $actual);
 	}
 	
-	public function testNormalizeTransformQuote()
+	/**
+	 * @test
+	 */
+	public function normalizeTransformQuote()
     {
 		$quote = 'You can’t fall if you don’t climb.  But there’s no joy in living your whole life on the ground.';
 		$expected = 'YOU CAN’T FALL IF YOU DON’T CLIMB. BUT THERE’S NO JOY IN LIVING YOUR WHOLE LIFE ON THE GROUND!';
@@ -57,9 +71,50 @@ class QuoteServiceTest extends KernelTestCase
 	}
 	
 	/**
+	 * @test
+     * @dataProvider quotesProvider
+     */
+	public function fetchQuoteSuccess($author, $expected)
+	{
+		$actual = $this->quoteService->fetchQuote($author);
+		$this->assertSame($expected, $actual);
+	}
+	
+	/**
+	 * @test
+     * @expectedException App\Exception\LimitOutOfBoundsException
+     */
+	public function fetchQuoteLimitOutOfBoundsExceptionInteger()
+	{
+		$actual = $this->quoteService->fetchQuote('unknown', 11);
+		$this->assertSame($expected, $actual);
+	}
+	
+	/**
+	 * @test
+     * @expectedException App\Exception\LimitOutOfBoundsException
+     */
+	public function fetchQuoteLimitOutOfBoundsExceptionString()
+	{
+		$actual = $this->quoteService->fetchQuote('unknown', 'abc');
+		$this->assertSame($expected, $actual);
+	}
+	
+	/**
+	 * @test
+     * @expectedException App\Exception\AuthorNotFoundException
+     */
+	public function fetchQuoteAuthorNotFoundException()
+	{
+		$actual = $this->quoteService->fetchQuote('mickey-mouse');
+		$this->assertSame($expected, $actual);
+	}
+	
+	/**
+	 * @test
      * @dataProvider authorProvider
      */
-	public function testNormalizeAuthor($author, $expected)
+	public function normalizeAuthor($author, $expected)
 	{
 		$actual = $this->quoteService->normalizeAuthor($author);	
 		$this->assertSame($expected, $actual);
@@ -74,4 +129,19 @@ class QuoteServiceTest extends KernelTestCase
 		yield ['Booker T. Washington', 'booker-t-washington'];
 		yield ['Martin Luther King Jr.', 'martin-luther-king-jr'];
     }
+	
+	public function quotesProvider()
+	{
+		yield ['marie-curie', 
+			['WE MUST BELIEVE THAT WE ARE GIFTED FOR SOMETHING, AND THAT THIS THING, AT WHATEVER COST, MUST BE ATTAINED!']];
+		yield ['leonardo-da-vinci', 
+			['I HAVE BEEN IMPRESSED WITH THE URGENCY OF DOING. KNOWING IS NOT ENOUGH; WE MUST APPLY. BEING WILLING IS NOT ENOUGH; WE MUST DO!']];
+		yield ['steve-jobs', 
+			['YOUR TIME IS LIMITED, SO DON’T WASTE IT LIVING SOMEONE ELSE’S LIFE!',
+			'THE ONLY WAY TO DO GREAT WORK IS TO LOVE WHAT YOU DO!']];
+		yield ['maya-angelou', 
+			['I’VE LEARNED THAT PEOPLE WILL FORGET WHAT YOU SAID, PEOPLE WILL FORGET WHAT YOU DID, BUT PEOPLE WILL NEVER FORGET HOW YOU MADE THEM FEEL!',
+			'LIFE IS NOT MEASURED BY THE NUMBER OF BREATHS WE TAKE, BUT BY THE MOMENTS THAT TAKE OUR BREATH AWAY!',
+			'YOU CAN’T USE UP CREATIVITY. THE MORE YOU USE, THE MORE YOU HAVE!']];			
+	}
 }
