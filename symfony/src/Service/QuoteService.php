@@ -57,7 +57,7 @@ final class QuoteService
 	
 	public function normalizeQuote(string $quote) : string
 	{
-		return preg_replace(['/\s{2}/', '/.$/'], [' ', ''], $quote);
+		return preg_replace(['/\s{2}/', '/\.$/'], [' ', ''], $quote);
 	}
 	
 	private function validateLimit($limit) : void

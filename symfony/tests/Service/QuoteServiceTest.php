@@ -15,10 +15,20 @@ class QuoteServiceTest extends KernelTestCase
 		$this->quoteService = self::$container->get('App\Service\QuoteService');
 	}
 	
-    public function testNormalizeQuote()
+    public function testNormalizeQuoteWithTrailingPeriod()
     {
 		$quote = 'If you do what you’ve always done, you’ll get what you’ve always gotten.';
 		$expected = 'If you do what you’ve always done, you’ll get what you’ve always gotten';
+		
+		$actual = $this->quoteService->normalizeQuote($quote);
+
+        $this->assertSame($expected, $actual);
+	}
+	
+	public function testNormalizeQuoteWithoutTrailingPeriod()
+    {
+		$quote = 'Nothing is impossible, the word itself says, “I’m possible!”';
+		$expected = 'Nothing is impossible, the word itself says, “I’m possible!”';
 		
 		$actual = $this->quoteService->normalizeQuote($quote);
 
@@ -45,4 +55,23 @@ class QuoteServiceTest extends KernelTestCase
 
         $this->assertSame($expected, $actual);
 	}
+	
+	/**
+     * @dataProvider authorProvider
+     */
+	public function testNormalizeAuthor($author, $expected)
+	{
+		$actual = $this->quoteService->normalizeAuthor($author);	
+		$this->assertSame($expected, $actual);
+	}
+	
+	public function authorProvider()
+    {
+		yield ['Unknown', 'unknown'];
+        yield ['Steve Jobs', 'steve-jobs'];
+		yield ['–Audrey Hepburn', 'audrey-hepburn'];
+		yield ['Sir Claus Moser', 'sir-claus-moser'];
+		yield ['Booker T. Washington', 'booker-t-washington'];
+		yield ['Martin Luther King Jr.', 'martin-luther-king-jr'];
+    }
 }
