@@ -15,14 +15,20 @@ use Symfony\Component\Serializer\Serializer;
 
 use App\Service\QuoteService;
 
+/**
+  * Class QuoteController
+  * @package App\Controller
+  */
 class QuoteController extends AbstractFOSRestController {
 	
     /**
      * @Rest\Get("/{author}")
+	 * @param string $author
      * @param Request $request
+	 * @param QuoteService $quoteService
      * @return View
      */
-    public function getQuote($author, Request $request, QuoteService $quoteService): View
+    public function getQuote(string $author, Request $request, QuoteService $quoteService): View
     {
 		$quotes = $quoteService->fetchQuote($author, $request->query->get('limit'));
         return View::create($quotes, Response::HTTP_OK);
