@@ -8,7 +8,7 @@ class QuoteControllerTest extends WebTestCase
 	 * @test
      * @dataProvider validPathProvider
      */
-    public function quoteIsSuccessful($path)
+    public function fetchQuoteIsSuccessful($path)
     {
         $client = self::createClient();
         $client->request('GET', $path);
@@ -20,12 +20,40 @@ class QuoteControllerTest extends WebTestCase
 	 * @test
      * @dataProvider invalidPathProvider
      */
-    public function quoteIsNotSuccessful($path)
+    public function fetchQuoteIsUnsuccessful($path)
     {
         $client = self::createClient();
         $client->request('GET', $path);
 
         $this->assertFalse($client->getResponse()->isSuccessful());
+    }
+	
+	/**
+	 * @test
+     */
+    public function fetchQuoteLimitOutOfBounds()
+    {
+        $client = self::createClient();
+        $client->request('GET', '/shout/steve-jobs?limit=100');
+		
+		$content = json_decode($client->getResponse()->getContent(), true);
+		
+        $this->assertEquals(400, $content['code']);
+		$this->assertEquals('Limit must be 10 or less.', $content['message']);
+    }
+	
+	/**
+	 * @test
+     */
+    public function fetchQuoteAuthorNotFound()
+    {
+        $client = self::createClient();
+        $client->request('GET', '/shout/donald-duck');
+		
+		$content = json_decode($client->getResponse()->getContent(), true);
+		
+        $this->assertEquals(404, $content['code']);
+		$this->assertEquals('Author donald-duck not found.', $content['message']);
     }
 	
     public function validPathProvider()

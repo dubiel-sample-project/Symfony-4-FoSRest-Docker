@@ -51,13 +51,13 @@ final class QuoteService
 	
 	public function normalizeAuthor(string $author) : string
 	{
-		$author = trim(preg_replace('/[^\w\s]+/', '', $author));
+		$author = preg_replace('/[^\w\s]+/', '', trim($author));
 		return strtolower(str_replace(' ', '-', $author));
 	}
 	
 	public function normalizeQuote(string $quote) : string
 	{
-		return trim(preg_replace(['/\s{2}/', '/[\.!]$/'], [' ', ''], $quote));
+		return preg_replace(['/\s{2}/', '/[\.!]$/'], [' ', ''], trim($quote));
 	}
 	
 	private function validateLimit($limit) : void

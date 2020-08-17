@@ -72,6 +72,15 @@ class QuoteServiceTest extends KernelTestCase
 	
 	/**
 	 * @test
+	 */
+	public function isLimitCorrect()
+    {
+		$quotes = $this->quoteService->fetchQuote('maya-angelou', 1);
+		$this->assertSame(1, count($quotes));
+	}
+	
+	/**
+	 * @test
      * @dataProvider quotesProvider
      */
 	public function fetchQuoteSuccess($author, $expected)
@@ -87,7 +96,6 @@ class QuoteServiceTest extends KernelTestCase
 	public function fetchQuoteLimitOutOfBoundsExceptionInteger()
 	{
 		$actual = $this->quoteService->fetchQuote('unknown', 11);
-		$this->assertSame($expected, $actual);
 	}
 	
 	/**
@@ -97,7 +105,6 @@ class QuoteServiceTest extends KernelTestCase
 	public function fetchQuoteLimitOutOfBoundsExceptionString()
 	{
 		$actual = $this->quoteService->fetchQuote('unknown', 'abc');
-		$this->assertSame($expected, $actual);
 	}
 	
 	/**
@@ -124,6 +131,7 @@ class QuoteServiceTest extends KernelTestCase
     {
 		yield ['Unknown', 'unknown'];
         yield ['Steve Jobs', 'steve-jobs'];
+		yield [' Ancient Indian Proverb', 'ancient-indian-proverb'];
 		yield ['–Audrey Hepburn', 'audrey-hepburn'];
 		yield ['Sir Claus Moser', 'sir-claus-moser'];
 		yield ['Booker T. Washington', 'booker-t-washington'];
