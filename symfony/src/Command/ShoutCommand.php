@@ -17,12 +17,12 @@ use App\Exception as AppException;
 class ShoutCommand extends Command
 {
     /**
-      * @var string Time period to cache items
+      * @var string Name of command
       */
     protected static $defaultName = 'app:shout';
 
     /**
-      * @var string Time period to cache items
+      * @var QuoteService Service to fetch quotes
       */
     private QuoteService $quoteService;
     
