@@ -4,6 +4,8 @@ namespace App\Tests\Service;
 
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 use App\Service\QuoteService;
+use Symfony\Component\Cache\Adapter\AdapterInterface;
+use DateInterval;
 
 class QuoteServiceTest extends KernelTestCase
 {
@@ -12,9 +14,12 @@ class QuoteServiceTest extends KernelTestCase
 	public function setUp()
 	{
 		self::bootKernel();
-		//var_dump(self::$kernel->getProjectdir());
-		$this->quoteService = self::$container->get('App\Service\QuoteService');
-		//$this->quoteService = new QuoteService(self::$kernel->getProjectdir(), );
+			
+		$item = new CacheItem();
+		$cacheStub = $this->createMock(AdapterInterface::class);
+		$cacheStub->method('getItem')->willReturn($item);
+		
+		$this->quoteService = new QuoteService(self::$kernel->getProjectdir(), $cacheStub);
 	}
 	
 	/**

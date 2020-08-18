@@ -10,12 +10,26 @@ use Symfony\Component\Console\Output\OutputInterface;
 use App\Service\QuoteService;
 use App\Exception as AppException;
 
+/**
+  * Class ShoutCommand
+  * @package App\Command
+  */
 class ShoutCommand extends Command
 {
+	/**
+      * @var string Time period to cache items
+      */
     protected static $defaultName = 'app:shout';
 
+	/**
+      * @var string Time period to cache items
+      */
 	private QuoteService $quoteService;
 	
+	/**
+	 * @param QuoteService $quoteService
+	 * @return void
+	 */
 	public function __construct(QuoteService $quoteService)
 	{
 		$this->quoteService = $quoteService;
@@ -23,12 +37,20 @@ class ShoutCommand extends Command
 		parent::__construct();
 	}
 
+	/**
+	 * @return void
+	 */
     protected function configure()
     {
          $this->addArgument('author', InputArgument::REQUIRED, 'author');
 		 $this->addArgument('limit', InputArgument::OPTIONAL, 'limit');
 	}
 
+	/**
+	 * @param InputInterface $input
+	 * @param OutputInterface $output
+	 * @return int
+	 */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $author = $input->getArgument('author');
