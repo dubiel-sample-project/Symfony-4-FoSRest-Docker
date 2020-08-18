@@ -20,17 +20,17 @@ use App\Service\QuoteService;
   * @package App\Controller
   */
 class QuoteController extends AbstractFOSRestController {
-	
+    
     /**
      * @Rest\Get("/{author}")
-	 * @param string $author
+     * @param string $author
      * @param Request $request
-	 * @param QuoteService $quoteService
+     * @param QuoteService $quoteService
      * @return View
      */
     public function getQuote(string $author, Request $request, QuoteService $quoteService): View
     {
-		$quotes = $quoteService->fetchQuote($author, $request->query->get('limit'));
+        $quotes = $quoteService->fetchQuote($author, $request->query->get('limit'));
         return View::create($quotes, Response::HTTP_OK);
-    }	
+    }    
 }

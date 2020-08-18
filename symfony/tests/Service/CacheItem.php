@@ -4,14 +4,19 @@ namespace App\Tests\Service;
 
 use Symfony\Contracts\Cache\ItemInterface;
 
-
+/**
+  * Class CacheItem
+  * @package App\Tests\Service
+  */
 class CacheItem implements ItemInterface
 {
-	protected $key;
+    protected $key;
     protected $value;
 
     /**
      * {@inheritdoc}
+     *
+     * @return string
      */
     public function getKey(): string
     {
@@ -20,6 +25,8 @@ class CacheItem implements ItemInterface
 
     /**
      * {@inheritdoc}
+     *
+     * @return mixed
      */
     public function get()
     {
@@ -28,6 +35,8 @@ class CacheItem implements ItemInterface
 
     /**
      * {@inheritdoc}
+     *
+     * @return false
      */
     public function isHit(): bool
     {
@@ -37,7 +46,7 @@ class CacheItem implements ItemInterface
     /**
      * {@inheritdoc}
      *
-     * @return $this
+     * @return ItemInterface
      */
     public function set($value): self
     {
@@ -49,27 +58,27 @@ class CacheItem implements ItemInterface
     /**
      * {@inheritdoc}
      *
-     * @return $this
+     * @return ItemInterface
      */
     public function expiresAt($expiration): self
     {
-
         return $this;
     }
 
     /**
      * {@inheritdoc}
      *
-     * @return $this
+     * @return ItemInterface
      */
     public function expiresAfter($time): self
     {
-
         return $this;
     }
 
     /**
      * {@inheritdoc}
+     *
+     * @return ItemInterface
      */
     public function tag($tags): ItemInterface
     {
@@ -78,6 +87,8 @@ class CacheItem implements ItemInterface
 
     /**
      * {@inheritdoc}
+     *
+     * @return array
      */
     public function getMetadata(): array
     {

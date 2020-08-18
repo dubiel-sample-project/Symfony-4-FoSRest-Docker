@@ -2,10 +2,14 @@
 
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
+/**
+  * Class QuoteControllerTest
+  * @package App\Tests\Controller
+  */
 class QuoteControllerTest extends WebTestCase
 {
     /**
-	 * @test
+     * @test
      * @dataProvider validPathProvider
      */
     public function fetchQuoteIsSuccessful($path)
@@ -16,8 +20,8 @@ class QuoteControllerTest extends WebTestCase
         $this->assertTrue($client->getResponse()->isSuccessful());
     }
 
-	/**
-	 * @test
+    /**
+     * @test
      * @dataProvider invalidPathProvider
      */
     public function fetchQuoteIsUnsuccessful($path)
@@ -27,35 +31,35 @@ class QuoteControllerTest extends WebTestCase
 
         $this->assertFalse($client->getResponse()->isSuccessful());
     }
-	
-	/**
-	 * @test
+    
+    /**
+     * @test
      */
     public function fetchQuoteLimitOutOfBounds()
     {
         $client = self::createClient();
         $client->request('GET', '/shout/steve-jobs?limit=100');
-		
-		$content = json_decode($client->getResponse()->getContent(), true);
-		
+        
+        $content = json_decode($client->getResponse()->getContent(), true);
+        
         $this->assertEquals(400, $content['code']);
-		$this->assertEquals('Limit must be 10 or less.', $content['message']);
+        $this->assertEquals('Limit must be 10 or less.', $content['message']);
     }
-	
-	/**
-	 * @test
+    
+    /**
+     * @test
      */
     public function fetchQuoteAuthorNotFound()
     {
         $client = self::createClient();
         $client->request('GET', '/shout/donald-duck');
-		
-		$content = json_decode($client->getResponse()->getContent(), true);
-		
+        
+        $content = json_decode($client->getResponse()->getContent(), true);
+        
         $this->assertEquals(404, $content['code']);
-		$this->assertEquals('Author donald-duck not found.', $content['message']);
+        $this->assertEquals('Author donald-duck not found.', $content['message']);
     }
-	
+    
     public function validPathProvider()
     {
         yield ['/shout/steve-jobs'];
@@ -64,8 +68,8 @@ class QuoteControllerTest extends WebTestCase
         yield ['/shout/w-clement-stone'];
         yield ['/shout/joshua-j-marine?limit=5'];
     }
-	
-	public function invalidPathProvider()
+    
+    public function invalidPathProvider()
     {
         yield ['/shout/mickey-mouse'];
         yield ['/shout/helen-keller?limit=11'];
