@@ -20,6 +20,22 @@ class QuoteControllerTest extends WebTestCase
 
         $this->assertTrue($client->getResponse()->isSuccessful());
     }
+    
+    /**
+     * @test
+     * @dataProvider validPathProvider
+     */
+    public function responseContentTypeIsApplicationJson($path)
+    {
+        $client = self::createClient();
+        $client->request('GET', $path);
+        
+        $responseHeaders = $client->getResponse()->headers;
+
+        $this->assertTrue($responseHeaders->has('content-type'));
+        $this->assertSame('application/json', $responseHeaders->get('content-type'));
+        $this->assertTrue($client->getResponse()->isSuccessful());
+    }
 
     /**
      * @test

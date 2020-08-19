@@ -6,9 +6,9 @@
 
 The relevant classes for the api are:
 
-* App\Controller\QuoteController
-* App\Service\QuoteService
-* App\Command\ShoutCommand
+* App\Controller\QuoteController (/src/symfony/Controller)
+* App\Service\QuoteService (/src/symfony/Service)
+* App\Command\ShoutCommand (/src/symfony/Command)
 
 The api can be called in the following manner **/shout/{author}** or **/shout/{author}?limit=#**. The limit parameter is optional.
 If the author was successfully found, a list of quotes will be returned based on the limit. If no limit is given, all quotes are returned.
@@ -21,8 +21,8 @@ PHPUnit may need to installed before the tests are run. Simply run the command `
 
 Test classes can be found here:
 
-* App\Tests\Controller\QuoteControllerTest
-* App\Tests\Service\QuoteServiceTest
+* App\Tests\Controller\QuoteControllerTest (/tests/Controller)
+* App\Tests\Service\QuoteServiceTest (/tests/Service)
 
 ## Installation
 

@@ -31,7 +31,7 @@ class QuoteController extends AbstractFOSRestController {
      */
     public function getQuote(string $author, Request $request, QuoteService $quoteService): View
     {
-        return View::create($quoteService->fetchQuote($author, $request->query->get('limit'), 
+        return View::create($quoteService->fetchQuote($author, $request->query->get('limit')), 
             Response::HTTP_OK);
     }    
 }
