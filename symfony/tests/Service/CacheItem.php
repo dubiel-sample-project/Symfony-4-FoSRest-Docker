@@ -7,6 +7,7 @@ use Symfony\Contracts\Cache\ItemInterface;
 /**
   * Class CacheItem
   * @package App\Tests\Service
+  * @author Matt Dubiel <munich55555@gmail.com>
   */
 class CacheItem implements ItemInterface
 {

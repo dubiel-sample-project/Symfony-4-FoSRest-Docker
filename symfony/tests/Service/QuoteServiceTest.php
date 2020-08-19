@@ -10,6 +10,7 @@ use DateInterval;
 /**
   * Class QuoteServiceTest
   * @package App\Tests\Service
+  * @author Matt Dubiel <munich55555@gmail.com>
   */
 class QuoteServiceTest extends KernelTestCase
 {

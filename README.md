@@ -2,8 +2,7 @@
 
 ### Shout Api for fetching quotes based on Authors. ###
 
-#### Overview ####
-=============
+## Overview
 
 The relevant classes for the api are:
 
@@ -25,8 +24,7 @@ Test classes can be found here:
 * App\Tests\Controller\QuoteControllerTest
 * App\Tests\Service\QuoteServiceTest
 
-#### Installation ####
-=============
+## Installation
 
 The api architecture consists of three services (nginx, php and redis) all managed by Docker. 
 

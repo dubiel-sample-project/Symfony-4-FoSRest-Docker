@@ -18,6 +18,7 @@ use App\Service\QuoteService;
 /**
   * Class QuoteController
   * @package App\Controller
+  * @author Matt Dubiel <munich55555@gmail.com>
   */
 class QuoteController extends AbstractFOSRestController {
     
@@ -30,7 +31,7 @@ class QuoteController extends AbstractFOSRestController {
      */
     public function getQuote(string $author, Request $request, QuoteService $quoteService): View
     {
-        $quotes = $quoteService->fetchQuote($author, $request->query->get('limit'));
-        return View::create($quotes, Response::HTTP_OK);
+        return View::create($quoteService->fetchQuote($author, $request->query->get('limit'), 
+            Response::HTTP_OK);
     }    
 }

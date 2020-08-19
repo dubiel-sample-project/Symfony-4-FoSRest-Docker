@@ -13,6 +13,7 @@ use App\Exception as AppException;
 /**
   * Class ShoutCommand
   * @package App\Command
+  * @author Matt Dubiel <munich55555@gmail.com>
   */
 class ShoutCommand extends Command
 {

@@ -10,6 +10,7 @@ use DateInterval;
 /**
   * Class QuoteService
   * @package App\Service
+  * @author Matt Dubiel <munich55555@gmail.com>
   */
 class QuoteService
 {

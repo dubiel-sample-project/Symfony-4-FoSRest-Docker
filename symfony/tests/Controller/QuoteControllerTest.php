@@ -5,6 +5,7 @@ use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 /**
   * Class QuoteControllerTest
   * @package App\Tests\Controller
+  * @author Matt Dubiel <munich55555@gmail.com>
   */
 class QuoteControllerTest extends WebTestCase
 {
