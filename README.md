@@ -6,9 +6,9 @@
 
 The relevant classes for the api are:
 
-* App\Controller\QuoteController (/src/symfony/Controller)
-* App\Service\QuoteService (/src/symfony/Service)
-* App\Command\ShoutCommand (/src/symfony/Command)
+* App\Controller\QuoteController (/src/Controller)
+* App\Service\QuoteService (/src/Service)
+* App\Command\ShoutCommand (/src/Command)
 
 The api can be called in the following manner **/shout/{author}** or **/shout/{author}?limit=#**. The limit parameter is optional.
 If the author was successfully found, a list of quotes will be returned based on the limit. If no limit is given, all quotes are returned.
