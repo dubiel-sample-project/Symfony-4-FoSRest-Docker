@@ -29,7 +29,7 @@ Test classes can be found here:
 The api architecture consists of three services (nginx, php and redis) all managed by Docker. 
 
 1. After checking out the repository, run `docker-compose up -d --build` to create the service containers.
-2. After successfully building, log into the php container using `docker exec -it {php_container_name} bash`.
+2. After successfully building, log into the php container using `docker exec -it {php_container_name} bash`
 3. From the root directory (/var/www/symfony) run `composer install` to install packages from the composer.lock file.
 4. After installation, the api should be available from port 8001 either at localhost or the ip address of the docker machine. Run `docker-machine ip` to obtain the ip address.
 
