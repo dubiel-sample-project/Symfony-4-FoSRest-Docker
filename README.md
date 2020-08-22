@@ -1,4 +1,4 @@
-# ip_backend_test #
+# Symfony 4 + FoSRest + Docker #
 
 ### Shout Api for fetching quotes based on Authors. ###
 
