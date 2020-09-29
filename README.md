@@ -13,6 +13,11 @@ The relevant classes for the api are:
 The api can be called in the following manner **/shout/{author}** or **/shout/{author}?limit=#**. The limit parameter is optional.
 If the author was successfully found, a list of quotes will be returned based on the limit. If no limit is given, all quotes are returned.
 
+Examples:
+* /shout/steve-jobs
+* /shout/booker-t-washington
+* /shout/maya-angelou?limit=1
+
 There is also the ability to fetch quotes over the console using the ShoutCommand. 
 Execute `php bin/console app:shout {author} [limit]` from the root directory (/var/www/symfony) to run the command.
 
